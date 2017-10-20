@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-export default class Stocks extends React.Component {
-  static propTypes = {
-    name: PropTypes.string.isRequired, // this is passed from the Rails view
-  };
+export default class Home extends React.Component {
+  // static propTypes = {
+  //   name: PropTypes.string.isRequired, // this is passed from the Rails view
+  // };
 
   /**
    * @param props - Comes from your rails view.

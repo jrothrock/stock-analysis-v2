@@ -7,6 +7,8 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'stocks-bundle' %>
   </head>
+  <%= react_component("app", props: @stocks_props, prerender: false) %>
+
 
   <body>
     <%= yield %>

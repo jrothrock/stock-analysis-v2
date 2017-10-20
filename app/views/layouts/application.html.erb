@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>StockAnalysisV2</title>
+    <title>Jack Rothrock's Stock Analysis</title>
     <%= csrf_meta_tags %>
-
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'stocks-bundle' %>
   </head>
+  <%= react_component("app", props: @stocks_props, prerender: false) %>
+
 
   <body>
     <%= yield %>

@@ -20,3 +20,60 @@ $secondary-color: color("blue", "darken-1") !default;
 @import "font-awesome-sprockets";
 @import "font-awesome";
 
+html{
+    background-color:black;
+    color:white;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.new-green{
+	background-color: #25c91a !important;
+}
+.alert-outer-container{
+    position: absolute;
+    width: 100%;
+    margin: auto;
+    max-height: 50px !important;
+}
+.alert-container{
+    position: relative;
+    width: 100%;
+    float: left;
+    height: 50px;
+    padding-top: 5px;
+    -webkit-transition: opacity 0.4s ease-in-out;
+    transition: opacity 0.4s ease-in-out;
+    opacity:1;
+}
+
+.alert-info, .alert-danger, .alert-success{
+    background-color: #1e88e5 !important;
+    margin: auto;
+    width: 50%;
+    border-radius: 5px;
+    height: 50px;
+    position: relative;
+    color: white;
+    top: -20px;
+    p {
+        font-size: 1.3rem;
+        position: relative;
+        padding-top: 10px;
+    }
+}
+
+.alert-danger{
+    background-color: #e53935 !important;
+}
+.alert-info{
+    background-color: #1e88e5 !important;
+}
+.alert-success{
+    background-color: #25c91a !important;
+}
+nav .brand-logo{
+    padding:0px 0px 0px 5px;
+}

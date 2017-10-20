@@ -35,6 +35,7 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 gem 'pg', '~> 0.18'
+gem 'bcrypt'
 gem 'react_on_rails', '~> 9.0.1'
 gem 'redis-namespace'
 gem 'redis-rails'
@@ -42,7 +43,7 @@ gem 'redis-rack-cache'
 gem 'exception_notification'
 gem 'whenever', :require => false
 gem 'rack-cors', :require => 'rack/cors'
-gem 'devise'
+gem 'jwt'
 gem 'mini_racer'
 gem 'figaro'
 # gem 'passenger'
@@ -51,6 +52,7 @@ gem 'materialize-sass'
 gem 'font-awesome-sass'
 gem 'jquery-rails'
 gem 'jquery-turbolinks'
+gem 'd3-rails'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
