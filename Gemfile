@@ -44,7 +44,6 @@ gem 'exception_notification'
 gem 'whenever', :require => false
 gem 'rack-cors', :require => 'rack/cors'
 gem 'jwt'
-gem 'mini_racer'
 gem 'figaro'
 # gem 'passenger'
 gem 'mocha'
@@ -53,6 +52,8 @@ gem 'font-awesome-sass'
 gem 'jquery-rails'
 gem 'jquery-turbolinks'
 gem 'd3-rails'
+gem 'yahoo-finance'
+gem 'rack-attack'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

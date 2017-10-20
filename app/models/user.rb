@@ -10,9 +10,7 @@ class User < ApplicationRecord
    def self.find_by_credentials(username, password)
     user = User.where("login_username = ?", username).first
     begin
-      if !user.good_standing
-        return "banned"
-      elsif user.password == password
+      if user.password == password
         begin 
           user.create_token
           user.save!

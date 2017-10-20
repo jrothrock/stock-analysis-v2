@@ -5,6 +5,8 @@ import Home from '../bundles/stocks/components/home';
 import Navbar from '../bundles/stocks/components/navbar';
 import Signin from '../bundles/stocks/components/signin';
 import Signup from '../bundles/stocks/components/signup';
+import Stock from '../bundles/stocks/components/stock';
+import Reroute from '../bundles/stocks/components/reroute';
 
 // This is how react_on_rails can see the stocks in the browser.
 ReactOnRails.register({
@@ -12,5 +14,6 @@ ReactOnRails.register({
   Home,
   Navbar,
   Signin,
-  Signup
+  Signup,
+  Stock
 });

@@ -14,13 +14,14 @@ ActiveRecord::Schema.define(version: 20171020014921) do
 
   create_table "stocks", force: :cascade do |t|
     t.string "ticker", null: false
-    t.integer "users_id"
-    t.decimal "purchase", precision: 8, scale: 2, default: "0.0", null: false
-    t.decimal "sold", precision: 8, scale: 2, default: "0.0", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "sold_date", null: false
-    t.index ["users_id"], name: "index_stocks_on_users_id"
+    t.integer "user_id"
+    t.text "description"
+    t.decimal "purchase", precision: 8, scale: 2, default: "0.0"
+    t.decimal "sold", precision: 8, scale: 2, default: "0.0"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "sold_date"
+    t.index ["user_id"], name: "index_stocks_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -38,6 +39,9 @@ ActiveRecord::Schema.define(version: 20171020014921) do
     t.datetime "updated_at", null: false
     t.boolean "admin", default: false
     t.string "username"
+    t.string "login_username"
+    t.string "token_string"
+    t.string "token"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

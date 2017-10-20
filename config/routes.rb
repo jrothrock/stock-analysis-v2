@@ -6,5 +6,7 @@ Rails.application.routes.draw do
   get '/signin', to: 'sessions#new', as:'new_session'
   post '/signin', to: 'sessions#create', as: 'signin'
   post '/logout', to: 'sessions#destroy', as: 'logout'
+  get '/stock', to: 'stocks#new', as: 'new_stock'
+  post '/stock', to: 'stocks#create', as:'create_stock'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

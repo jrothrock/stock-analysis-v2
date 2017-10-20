@@ -1,24 +1,18 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import {withRouter } from 'react-router-dom';
 
-export default class Signup extends React.Component {
-  // static propTypes = {
-  //   name: PropTypes.string.isRequired, // this is passed from the Rails view
-  // };
+class Signup extends React.Component {
 
-  /**
-   * @param props - Comes from your rails view.
-   */
   constructor(props) {
     super(props);
 
-    // How to set initial state in ES6 class syntax
-    // https://facebook.github.io/react/docs/reusable-components.html#es6-classes
     this.state = { username: this.props.username,
                    email: this.props.email,
                    password: this.props.password,
                    password_confirmation: this.props.password_confirmation
                  };
+    this.updateSignedIn = props.updateSignedIn;
   }
 
     updateUsername = (username) => {
@@ -35,16 +29,17 @@ export default class Signup extends React.Component {
     };
 
     submitForm = () =>{
-        console.log('form submitted');
-        console.log(this.state);
         $.ajax({
             url: `${location.origin}/signup`,
             data: {email:this.state.email,username:this.state.username,password:this.state.password,password_confirmation:this.state.password_confirmation},
             type: 'POST',
-            success: function(data) {
-               console.log(data);
+            success: (data) => {
+               localStorage.setItem("_stock_analysis_session", data.token)
+               localStorage.setItem("_stock_analysis_username", data.username)
+               this.updateSignedIn(true, 'info', 'Successfully Registered');
+               this.props.history.push('/');
             },
-            error:function(error){
+            error: (error) =>{
                 console.log(error);
             }
           });
@@ -89,3 +84,5 @@ export default class Signup extends React.Component {
     );
   }
 }
+
+export default withRouter(Signup);

@@ -9,3 +9,9 @@ Every week I'll invest in a company, and over time I'd like to measure my portfo
 ## Why v2?
 
 I made a v1 a [while ago](https://github.com/jrothrock/stock-analysis-app) that sort of like this. However, the code is/was pretty bad, and so hopefully this time around it'll be a lot better. Also, I'm going to be testing some new libraries that I haven't used in the past. These include React, D3, Capistrano, and hopefully I can get some machine learning integrated into this eventually. 
+
+## For building
+When it comes to deploying, the webpack npm file in node_modules/.bin has to be have the top line changed to where node is sourced. This can best be found by doing `which node`
+
+## License 
+    These notes are released under MIT.

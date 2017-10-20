@@ -2,43 +2,41 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {withRouter } from 'react-router-dom';
 
-class Signin extends React.Component {
+class Stock extends React.Component {
 
   constructor(props) {
     super(props);
 
-    this.state = { email: this.props.email,
-                   password: this.props.password
+    this.state = { stock: this.props.stock,
+                   description: this.props.description
                  };
-    this.updateSignedIn = this.props.updateSignedIn;
+    this.updateMessage = props.updateMessage;
   }
 
-
-    updateUsername = (username) => {
-        this.setState({ username });
+    updateStock = (stock) => {
+        this.setState({ stock });
     };
-    updatePassword = (password) => {
-        this.setState({ password });
-    };
+    updateDescription = (description) =>{
+        this.setState({description})
+    }
 
     submitForm = () =>{
         $.ajax({
-            url: `${location.origin}/signin`,
-            data: {username:this.state.username,password:this.state.password},
+            url: `${location.origin}/stock`,
+            headers: { 'Authorization': `Bearer ${localStorage.getItem("_stock_analysis_session")}` },
+            data: {ticker:this.state.stock,description:this.state.description},
             type: 'POST',
             success: (data) => {
-               localStorage.setItem("_stock_analysis_session", data.token)
-               localStorage.setItem("_stock_analysis_username", data.username)
-               this.updateSignedIn(true, 'info', 'Successfully Logged In');
-               this.props.history.push('/');
+                this.updateMessage('success','Successfully Submitted Ticker')
+                this.props.history.push('/');
             },
             error: (error) =>{
                 console.log(error);
             }
-          });
+            });
     };
 
-  render() {
+render() {
     return (
       <div className="login-bg">
         <div className="container">
@@ -46,16 +44,16 @@ class Signin extends React.Component {
                 <div className="col-md-4 col-md-offset-4">
                     <div className="log-in panel">
                         <div className="panel-heading">
-                            <h2>Sign in</h2>
+                            <h2>Stock</h2>
                         </div>
                             <div className="panel-body">
                                 <div className="input-field">
-                                    <input className='input-lg' type='text' autoFocus='true' id='email' onChange={(e) => this.updateUsername(e.target.value)} required />
-                                    <label htmlFor="email">Username</label>
+                                    <input className='input-lg' type='text' autoFocus='true' id='stock' onChange={(e) => this.updateStock(e.target.value)} required />
+                                    <label htmlFor="stock">Stock</label>
                                 </div>
                                 <div className="input-field">
-                                    <input className='input-lg' type='password' id='password' onChange={(e) => this.updatePassword(e.target.value)} required />
-                                    <label htmlFor="passwor">Password</label>
+                                    <input className='input-lg' type='text' id='description' onChange={(e) => this.updateDescription(e.target.value)} required />
+                                    <label htmlFor="description">Description</label>
                                 </div>
                                 <div className="input-field">
                                     <button className='waves-effect waves-light btn' onClick={()=> this.submitForm()}>Log in</button>
@@ -69,4 +67,5 @@ class Signin extends React.Component {
     );
   }
 }
-export default withRouter(Signin)
+
+export default withRouter(Stock);
