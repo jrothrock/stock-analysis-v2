@@ -23,7 +23,7 @@ class Signin extends React.Component {
 
     submitForm = () =>{
         $.ajax({
-            url: `${location.origin}/signin`,
+            url: `${location.origin}/api/v1/auth/signin`,
             data: {username:this.state.username,password:this.state.password},
             type: 'POST',
             success: (data) => {
@@ -33,7 +33,9 @@ class Signin extends React.Component {
                this.props.history.push('/');
             },
             error: (error) =>{
-                console.log(error);
+                if(error.status === 404){
+                    Materialize.toast('The Username or Password Is Incorrect', 3000, 'rounded-error') 
+                }
             }
           });
     };

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {withRouter } from 'react-router-dom';
 
-class Stock extends React.Component {
+class New_Stock extends React.Component {
 
   constructor(props) {
     super(props);
@@ -22,7 +22,7 @@ class Stock extends React.Component {
 
     submitForm = () =>{
         $.ajax({
-            url: `${location.origin}/stock`,
+            url: `${location.origin}/api/v1/stocks`,
             headers: { 'Authorization': `Bearer ${localStorage.getItem("_stock_analysis_session")}` },
             data: {ticker:this.state.stock,description:this.state.description},
             type: 'POST',
@@ -32,8 +32,9 @@ class Stock extends React.Component {
             },
             error: (error) =>{
                 console.log(error);
+                Materialize.toast("Ticker Doesn't Exist", 3000, 'rounded-error');
             }
-            });
+        });
     };
 
 render() {
@@ -56,7 +57,7 @@ render() {
                                     <label htmlFor="description">Description</label>
                                 </div>
                                 <div className="input-field">
-                                    <button className='waves-effect waves-light btn' onClick={()=> this.submitForm()}>Log in</button>
+                                    <button className='waves-effect waves-light btn' onClick={()=> this.submitForm()}>Submit</button>
                                 </div>
                             </div>
                     </div>
@@ -68,4 +69,4 @@ render() {
   }
 }
 
-export default withRouter(Stock);
+export default withRouter(New_Stock);

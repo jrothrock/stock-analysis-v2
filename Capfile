@@ -34,7 +34,8 @@ require 'capistrano/rvm'
 require "capistrano/rails/assets"
 require "capistrano/rails/migrations"
 require 'capistrano/puma'
-require 'capistrano/nvm'
+require "whenever/capistrano"
+require 'capistrano/postgresql'
 
 install_plugin Capistrano::Puma
 

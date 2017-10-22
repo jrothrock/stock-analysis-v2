@@ -5,6 +5,9 @@ class User < ApplicationRecord
   attr_reader :password
   include BCrypt
 
+  has_one :assets
+  has_many :ledgers
+
    before_create :create_token
 
    def self.find_by_credentials(username, password)
@@ -86,12 +89,12 @@ class User < ApplicationRecord
     	user = User.where("token_string = ?", random_string).first
     	puts user.username
     	if user.username
-        puts user.token
-    		user.token = nil
-        user.token_string = nil
-        user.logged_in = false
+        # puts user.token
+    		user.token = ''
+        user.token_string = ''
+        # user.logged_in = false
     		user.save!
-        purge_cache(user.uuid)
+        # purge_cache(user.uuid)
     		return true
     	end
     rescue 

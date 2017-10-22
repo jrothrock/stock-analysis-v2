@@ -10,18 +10,50 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171020014921) do
+ActiveRecord::Schema.define(version: 20171026203915) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "assets", force: :cascade do |t|
+    t.integer "user_id"
+    t.jsonb "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.decimal "current", precision: 8, scale: 2, default: "0.0"
+    t.decimal "total", precision: 8, scale: 2, default: "0.0"
+    t.decimal "today", precision: 8, scale: 2, default: "0.0"
+    t.decimal "yesterday", precision: 8, scale: 2, default: "0.0"
+    t.decimal "beginning", precision: 8, scale: 2, default: "0.0"
+    t.decimal "roi", precision: 8, scale: 2
+  end
+
+  create_table "ledger", force: :cascade do |t|
+    t.string "ticker", null: false
+    t.integer "user_id"
+    t.text "description"
+    t.boolean "purchase", default: false
+    t.decimal "amount", precision: 8, scale: 2, default: "0.0"
+    t.decimal "change", precision: 8, scale: 2, default: "0.0"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean "closed", default: false
+    t.jsonb "data"
+    t.boolean "withdrawl", default: false
+    t.integer "quantity"
+  end
 
   create_table "stocks", force: :cascade do |t|
     t.string "ticker", null: false
     t.integer "user_id"
-    t.text "description"
     t.decimal "purchase", precision: 8, scale: 2, default: "0.0"
     t.decimal "sold", precision: 8, scale: 2, default: "0.0"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "sold_date"
-    t.index ["user_id"], name: "index_stocks_on_user_id"
+    t.boolean "closed", default: false
+    t.integer "quantity"
+    t.integer "remaining"
   end
 
   create_table "users", force: :cascade do |t|
@@ -42,8 +74,9 @@ ActiveRecord::Schema.define(version: 20171020014921) do
     t.string "login_username"
     t.string "token_string"
     t.string "token"
-    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["login_username"], name: "index_users_on_login_username", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["username"], name: "index_users_on_username", unique: true
   end
 
 end

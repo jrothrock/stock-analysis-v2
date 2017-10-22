@@ -1,4 +1,29 @@
-Work on sign in and sign up form validations and errors
-Work on ticker form validations and errors
+* - worked on, should be double checked
+** - think I've completed
+_____________________________
+** Work on sign in and sign up form validations and errors
+** Work on ticker form validations and errors
 
-Work on stocks
+** Work on stocks
+
+* So, I ended up getting rid of the stocks database, but there really should be one. That way a stock can be tracked when bought and sold to make sure that the correct unit price is determined when selling stock - instead of just doing an average.
+    - this MAY not matter in my case, but this should really be seriously considered now before later.
+        - I'll add a purchases and sales hash to assets, so that this can become a feature in the future.
+            - doing this meathod, the sold should not use the average but the individual stock. The purchases 'log' should also have the quantity_holding reduced until its zero, then moving on to the next closest date. LIFO.
+
+**Work on redis
+
+**Work on mobile
+
+* Work on whenever/cron/rakes
+
+Work on withdrawls
+
+Work on About Page
+
+Work on pagination for ledger and assets
+
+Sometimes the beginning amount returns with out the number_to_currency
+
+add expirations to redis set on graphs
+    - for ledgers outside of 100, graphs will get stale

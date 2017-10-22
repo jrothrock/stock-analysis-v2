@@ -3,14 +3,19 @@
   <head>
     <title>Jack Rothrock's Stock Analysis</title>
     <%= csrf_meta_tags %>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'stocks-bundle' %>
   </head>
-  <%= react_component("app", props: @stocks_props, prerender: false) %>
+  <%= react_component("index", props: @stock_props, prerender: false) %>
 
 
   <body>
+    <!-- Google Tag Manager (noscript) -->
+      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K3X986L"
+      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+      <!-- End Google Tag Manager (noscript) -->
     <%= yield %>
   </body>
 </html>

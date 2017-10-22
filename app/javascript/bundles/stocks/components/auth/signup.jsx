@@ -30,7 +30,7 @@ class Signup extends React.Component {
 
     submitForm = () =>{
         $.ajax({
-            url: `${location.origin}/signup`,
+            url: `${location.origin}/api/v1/auth/signup`,
             data: {email:this.state.email,username:this.state.username,password:this.state.password,password_confirmation:this.state.password_confirmation},
             type: 'POST',
             success: (data) => {
@@ -41,6 +41,9 @@ class Signup extends React.Component {
             },
             error: (error) =>{
                 console.log(error);
+                if(error.status === 409){
+                   Materialize.toast('Username Already Exists', 3000, 'rounded-error');
+                }
             }
           });
     };

@@ -1,4 +1,4 @@
-class HomeController < ApplicationController
+class Api::V1::Stocks::StocksController < ApplicationController
   def index
     stocks = $redis.get("stocks")  
     if stocks.nil?
@@ -9,7 +9,7 @@ class HomeController < ApplicationController
             stocks = [ledger,assets].to_json
             $redis.set("stocks",stocks)
         else
-            @stock_props = {ledger:[], assets:[]}
+            render json:{ledger:[], assets:[]}
             return
         end
     end
@@ -20,6 +20,16 @@ class HomeController < ApplicationController
     if stocks[1]
        stocks[1] = Asset.mapAssets(stocks[1])
     end
-    @stock_props = {ledger:stocks[0], assets:stocks[1]}
+    render json:{ledger:stocks[0], assets:stocks[1]}
+  end
+
+  def read
+      data = Stock.get_history(params[:stock])
+      render json:{stock:data}
+  end
+
+  def new
+  end
+  def create
   end
 end

@@ -11,7 +11,7 @@ set :linked_files, %w{config/database.yml config/application.yml}
 set :linked_dirs, %w{node_modules log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads}
 set :keep_releases, 5
 set :rvm_type, :user
-set :rvm_ruby_version, 'ruby-2.3.1'
+set :rvm_ruby_version, 'ruby-2.4.1'
 set :nvm_type, :user # or :system, depends on your nvm setup
 set :nvm_node, 'v6.0.0'
 set :nvm_map_bins, %w{node npm yarn}
