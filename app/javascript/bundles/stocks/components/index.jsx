@@ -8,7 +8,6 @@ import Navbar from './navbar/navbar';
 import Home from './home/home';
 import Signup from './auth/signup';
 import Signin from './auth/signin';
-import New_Stock from './stock/new';
 import Reroute from './reroute/reroute';
 import Footer from './footer/footer';
 import Stock from './stock/stock';
@@ -16,11 +15,7 @@ import App from './app/app';
 import Ledger from './ledger/ledger';
 
 export default class Index extends React.Component {
-
-  static contextTypes: {
-    router: React.PropTypes.object
-  };
-
+    
   /**
    * @param props - Comes from your rails view.
    */
@@ -80,9 +75,6 @@ export default class Index extends React.Component {
                     )}/>
                     <Route exact path='/signin' render={(props) => (
                         <Signin updateSignedIn={this.updateSignedIn}  />
-                    )}/>
-                    <Route exact path='/stock' render={(props) => (
-                        <New_Stock updateMessage={this.updateMessage} />
                     )}/>
                     <Route exact path='/ledger' render={(props) => (
                         <Ledger updateMessage={this.updateMessage} updateAssets={this.updateAssets} />

@@ -59,6 +59,7 @@ let div = d3.select("body").append("div")
     .style("opacity", 0);
 
   let data = this.state.stock;
+  let data_length = this.state.stock.length;
   x.domain(d3.extent(data, function(d) { return parseTime(d.date); }));
   y.domain(d3.extent(data, function(d) { return d.close; }));
 
@@ -131,8 +132,9 @@ let div = d3.select("body").append("div")
             d1 = data[i],
             d = x0 - d0.date > d1.date - x0 ? d1 : d0;
             focus.attr("transform", "translate(" + d3.mouse(this)[0] + "," + y(Math.round(d.close * 100) / 100) + ")");
-            
-            focus.select("text").text(function() { return `$${Math.round(d.close * 100) / 100}${(Math.round(d.close * 100) / 100).toString().split('.')[1].length === 1 ? '0' : ''}, ${parseTime(d.date).toISOString().split('T')[0]}`});
+            let text = (i > data_length / 3) ? `$${Math.round(d.close * 100) / 100}${(Math.round(d.close * 100) / 100).toString().split('.')[1].length === 1 ? '0' : ''}, ${parseTime(d.date).toISOString().split('T')[0]}` : `${parseTime(d.date).toISOString().split('T')[0]}, $${Math.round(d.close * 100) / 100}${(Math.round(d.close * 100) / 100).toString().split('.')[1].length === 1 ? '0' : ''}`;
+            focus.select("text").text(function() { return text});
+            focus.select("text").style("direction", (i > data_length / 3) ? 'ltr' : 'rtl').attr('x',(i > data_length / 3) ? 15 : -15);
             focus.select(".x-hover-line").attr("y2", height - y(Math.round(d.close * 100) / 100));
             focus.select(".y-hover-line").attr("x2", width + width);
       } catch(e) {
