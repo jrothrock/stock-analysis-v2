@@ -19,7 +19,7 @@ class Statistics extends React.Component {
     let beginning = (nextProps.assets && nextProps.assets['beginning']) ? nextProps.assets['beginning'] : 0;
     let roi = (nextProps.assets && nextProps.assets['roi']) ? nextProps.assets['roi'] : 0.0;
     let current = (nextProps.assets && nextProps.assets['current']) ? nextProps.assets['current'] : 0;
-    let today = (nextProps.assets && nextProps.assets['todays']) ? nextProps.assets['todays'] : 0;
+    let today = (nextProps.assets && nextProps.assets['today']) ? nextProps.assets['today'] : 0;
     this.setState({ current_assets: current, roi: roi, beginning_amount: beginning,today_change:today});  
   }
 

@@ -108,9 +108,15 @@ class Api::V1::Stocks::SellController < ApplicationController
             ### this beginning really should be calculated using the individual stocks themselves, not just the average.
             ledger.amount = (price.to_f * params[:quantity].to_f)
             ledger.user_id = user.id
+            ledger.purchase_date = stocks[0].created_at
+            ledger.purchase_price = average
+            ledger.sale_date = Time.now
+            ledger.sale_price = params[:price].to_f
             ledger.quantity = params[:quantity].to_i
-            ledger.description = ActionView::Base.full_sanitizer.sanitize(params[:description])
-            # user.
+            ledger.the_great = ActionView::Base.full_sanitizer.sanitize(params[:great])
+            ledger.the_good = ActionView::Base.full_sanitizer.sanitize(params[:good])
+            ledger.the_bad = ActionView::Base.full_sanitizer.sanitize(params[:bad])
+            ledger.the_ugly = ActionView::Base.full_sanitizer.sanitize(params[:ugly])
             $redis.del("stocks")
             if ledger.save && assets.save
                 ledger_get = Ledger.where("user_id = ?", user.id).order("created_at DESC").limit(10)

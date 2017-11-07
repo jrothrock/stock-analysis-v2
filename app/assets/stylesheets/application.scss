@@ -24,6 +24,9 @@ html{
     background-color:black;
     color:white;
 }
+textarea{
+    height:8rem;
+}
 
 .text-center{
     text-align: center;
@@ -283,7 +286,6 @@ $duration: 10s;
 .buy-btn, .sell-btn{
     margin-top:-7px;
     margin-bottom:7px;
-    cursor:default;
     width:100px;
 }
 .buy-btn{

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171026203915) do
+ActiveRecord::Schema.define(version: 20171106235530) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,7 +31,6 @@ ActiveRecord::Schema.define(version: 20171026203915) do
   create_table "ledger", force: :cascade do |t|
     t.string "ticker", null: false
     t.integer "user_id"
-    t.text "description"
     t.boolean "purchase", default: false
     t.decimal "amount", precision: 8, scale: 2, default: "0.0"
     t.decimal "change", precision: 8, scale: 2, default: "0.0"
@@ -41,6 +40,14 @@ ActiveRecord::Schema.define(version: 20171026203915) do
     t.jsonb "data"
     t.boolean "withdrawl", default: false
     t.integer "quantity"
+    t.text "the_great"
+    t.text "the_good"
+    t.text "the_bad"
+    t.text "the_ugly"
+    t.datetime "purchase_date"
+    t.decimal "purchase_price", precision: 8, scale: 2, default: "0.0"
+    t.datetime "sale_date"
+    t.decimal "sale_price", precision: 8, scale: 2, default: "0.0"
   end
 
   create_table "stocks", force: :cascade do |t|

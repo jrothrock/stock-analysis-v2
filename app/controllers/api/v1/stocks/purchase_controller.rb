@@ -59,7 +59,12 @@ class Api::V1::Stocks::PurchaseController < ApplicationController
             ledger.amount = params[:price].to_f * params[:quantity].to_f
             ledger.user_id = user.id
             ledger.quantity = params[:quantity].to_i
-            ledger.description = ActionView::Base.full_sanitizer.sanitize(params[:description])
+            ledger.purchase_price = params[:price].to_f
+            ledger.purchase_date = Time.now
+            ledger.the_great = ActionView::Base.full_sanitizer.sanitize(params[:great])
+            ledger.the_good = ActionView::Base.full_sanitizer.sanitize(params[:good])
+            ledger.the_bad = ActionView::Base.full_sanitizer.sanitize(params[:bad])
+            ledger.the_ugly = ActionView::Base.full_sanitizer.sanitize(params[:ugly])
             $redis.del("stocks")
             if ledger.save && assets.save && stock.save
                 ledger = Ledger.where("user_id = ?", user.id).order("created_at DESC").limit(10)

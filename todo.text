@@ -27,3 +27,5 @@ Sometimes the beginning amount returns with out the number_to_currency
 
 add expirations to redis set on graphs
     - for ledgers outside of 100, graphs will get stale
+
+The sold dot and purchase dot for the graphs basically use the same code. Refactor it.

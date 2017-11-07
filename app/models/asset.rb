@@ -16,6 +16,7 @@ class Asset < ApplicationRecord
         end
         assets["current"] = number_to_currency(assets["current"])
         assets["beginning"] = number_to_currency(assets["beginning"])
+        assets["today"] = number_to_currency(assets["today"])
         assets
     end
 end

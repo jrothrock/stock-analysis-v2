@@ -47,18 +47,20 @@ class Ledger extends React.Component {
         for(let i =0; i<this.state.entries.length; i++){
         lis.push(<div key={i} className="col s12 row stock-container" id={i+'-ledger-container'}>
             <div className="col s2">
-            <div className={'btn ' + (this.state.entries[i].purchase ? 'buy-btn' : 'sell-btn')}>
-                {this.state.entries[i].purchase ? "BUY" : "SELL"}
-            </div>
-            </div>
-            <div className="col s2">
-            <Link to={"/stock/"+this.state.entries[i].ticker.substr(1)} activeClassName="active">{this.state.entries[i].ticker}</Link>
-            </div>
-            <div className="col s2">
-            {this.state.entries[i].quantity}
+                <Link to={{pathname:"/stock/"+this.state.entries[i].ticker.substr(1), query:{purchase_date:this.state.entries[i].purchase_date,purchase_price:parseFloat(this.state.entries[i].purchase_price.substr(1)), sale_date: this.state.entries[i].sale_date, sale_price: parseFloat(this.state.entries[i].sale_price.substr(1)) }}} activeClassName="active">
+                    <div className={'btn ' + (this.state.entries[i].purchase ? 'buy-btn' : 'sell-btn')}>
+                        {this.state.entries[i].purchase ? "BUY" : "SELL"}
+                    </div>
+                </Link>
             </div>
             <div className="col s2">
-                {this.state.show_total ? this.state.entries[i].amount : `$${Math.round(parseFloat(this.state.entries[i].amount.substr(1))/parseFloat(this.state.entries[i].quantity)*100)/100}`}
+                <Link to={{pathname:"/stock/"+this.state.entries[i].ticker.substr(1), query:{purchase_date:this.state.entries[i].purchase_date,purchase_price:parseFloat(this.state.entries[i].purchase_price.substr(1)), sale_date: this.state.entries[i].sale_date, sale_price: parseFloat(this.state.entries[i].sale_price.substr(1)) }}} activeClassName="active">{this.state.entries[i].ticker}</Link>
+            </div>
+            <div className="col s2">
+                {this.state.entries[i].quantity}
+            </div>
+            <div className="col s2">
+                {this.state.show_total ? this.state.entries[i].amount : (this.state.entries[i].purchase ? this.state.entries[i].purchase_price : this.state.entries[i].sale_price)}
             </div>
             <div className="col s2">
                 {this.state.show_time_ago ? this.state.entries[i].time_ago : this.state.entries[i].created_at}
@@ -67,7 +69,23 @@ class Ledger extends React.Component {
                 <a href='#' onClick={(e)=> this.showDescription(e,i)} id={i+'-ledger-show-link'} data-toggle="false">Show <i className='fa fa-chevron-down'></i></a>
             </div>
             <div className='col s12 row stock-container-description' id={i+'-ledger-description'} style={{display:"none"}}>
-            {this.state.entries[i].description}
+                <h5 className="center" style={{marginBottom:'20px', fontSize:'1.7rem'}}>Analysis:</h5>
+                <div className='col s12 row' style={{borderBottom:'1px solid rgba(255,255,255,0.2)'}}>
+                    <h6 style={{fontSize:'1.45rem'}}>The Great:</h6>
+                    <div>{this.state.entries[i].the_great}</div>
+                </div>
+                <div className='col s12 row' style={{borderBottom:'1px solid rgba(255,255,255,0.2)'}}>
+                    <h6 style={{fontSize:'1.45rem'}}>The Good:</h6>
+                    <div>{this.state.entries[i].the_good}</div>
+                </div>
+                <div className='col s12 row' style={{borderBottom:'1px solid rgba(255,255,255,0.2)'}}>
+                    <h6 style={{fontSize:'1.45rem'}}>The Bad:</h6>
+                    <div>{this.state.entries[i].the_bad}</div>
+                </div>
+                <div className='col s12 row' style={{borderBottom:'1px solid rgba(255,255,255,0.2)'}}>
+                    <h6 style={{fontSize:'1.45rem'}}>The Ugly:</h6>
+                    <div>{this.state.entries[i].the_ugly}</div>
+                </div>
             </div>
         </div>)
         }

@@ -39,7 +39,7 @@ class Assets extends React.Component {
             {this.state.assets.data[keys[i]]['current']}
             </div>
             <div className='col s2'>
-            {parseFloat(this.state.assets.data[keys[i]]['current'].substr(1))-(parseFloat(this.state.assets.data[keys[i]]['purchase_average'].substr(1))*parseFloat(this.state.assets.data[keys[i]]['quantity']))}
+            {parseFloat(this.state.assets.data[keys[i]]['current'].substr(1)-Math.round((parseFloat(this.state.assets.data[keys[i]]['purchase_average'].substr(1))*parseFloat(this.state.assets.data[keys[i]]['quantity']))*100)/100)}
             </div>
         </div>)
       } else if(keys[i] === 'Cash' && parseFloat(this.state.assets.data[keys[i]].substr(1)) > 0){

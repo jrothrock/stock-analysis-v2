@@ -8,7 +8,10 @@ class Sell extends React.Component {
     super(props);
 
     this.state = { stock: '',
-                   description: '',
+                   the_great: '',
+                   the_good: '',
+                   the_bad: '',
+                   the_ugly: '',
                    quantity: 1,
                    price: 1,
                    stocks:[],
@@ -23,8 +26,17 @@ class Sell extends React.Component {
     updateStock = (stock) => {
         this.setState({ stock:stock });
     };
-    updateDescription = (description) =>{
-        this.setState({description:description})
+    updateTheGreat = (great) =>{
+        this.setState({the_great:great})
+    }
+    updateTheGood = (good) =>{
+        this.setState({the_good:good})
+    }
+    updateTheBad = (bad) =>{
+        this.setState({the_bad:bad})
+    }
+    updateTheUgly = (ugly) =>{
+        this.setState({the_ugly:ugly})
     }
     updateQuantity = (quantity) => {
         this.setState({quantity:quantity})
@@ -38,7 +50,7 @@ class Sell extends React.Component {
         $.ajax({
             url: `${location.origin}/api/v1/stocks/sell`,
             headers: { 'Authorization': `Bearer ${localStorage.getItem("_stock_analysis_session")}` },
-            data: {ticker:this.state.stock,quantity:this.state.quantity,price:this.state.price,description:this.state.description},
+            data: {ticker:this.state.stock,quantity:this.state.quantity,price:this.state.price,great:this.state.the_great,good:this.state.the_good,bad:this.state.the_bad,ugly:this.state.the_ugly},
             type: 'POST',
             success: (data) => {
                 this.updateAssets(data.assets, data.ledger)
@@ -124,8 +136,20 @@ render() {
                                         <input className='input-lg' type='number' id='price' step='any' onChange={(e) => this.updatePrice(e.target.value)} required />
                                     </div>
                                     <div className="input-field">
-                                        <input className='input-lg' type='text' id='description' onChange={(e) => this.updateDescription(e.target.value)} required />
-                                        <label htmlFor="description">Description</label>
+                                        <span style={{color:'grey',fontSize:'0.9em'}}>The Great</span>
+                                        <textarea  id='the-great' onChange={(e) => this.updateTheGreat(e.target.value)} required />
+                                    </div>
+                                    <div className="input-field">
+                                        <span style={{color:'grey',fontSize:'0.9em'}}>The Good</span>
+                                        <textarea  id='the-good' onChange={(e) => this.updateTheGood(e.target.value)} required />
+                                    </div>
+                                    <div className="input-field">
+                                        <span style={{color:'grey',fontSize:'0.9em'}}>The Bad</span>
+                                        <textarea id='the-bad' onChange={(e) => this.updateTheBad(e.target.value)} required />
+                                    </div>
+                                    <div className="input-field">
+                                        <span style={{color:'grey',fontSize:'0.9em'}}>The Ugly</span>
+                                        <textarea  id='the-ugly' onChange={(e) => this.updateTheUgly(e.target.value)} required />
                                     </div>
                                     <div className="input-field">
                                         <button className='waves-effect waves-light btn' onClick={()=> this.submitForm()} id='submit-sell-button'>Submit</button>
