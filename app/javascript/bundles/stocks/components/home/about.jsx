@@ -18,7 +18,7 @@ class About extends React.Component {
           <div className='stock-analysis-reason-text'>
             <p>The idea of this is to start out with $10,000, and invest the initial amount into various stocks.</p>
             <p>Stocks can be sold, and a 'Cash' account will be created which will be deducted at the next purchase.</p>
-            <p> If no cash account exists, or doesn't have enough to cover the trade, then the total assets and starting amount will be increased.</p>
+            <p> If no cash account exists, or doesn't have enough to cover the trade, then the starting amount and total assets will be increased.</p>
             <p> Numbers are updated every hour.</p>
           </div>
     </div>

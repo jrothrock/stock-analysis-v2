@@ -28,6 +28,11 @@ desc "update statistics and graphs"
                     end
                     if assets.data["$#{stock.ticker}"] && price
                         assets.data["$#{stock.ticker}"]['current'] = (price * assets.data["$#{stock.ticker}"]['quantity'].to_f).to_f
+                        assets.data["$#{stock.ticker}"]['today_change'] = number_to_currency(assets.data["$#{stock.ticker}"]['current'] - assets.data["$#{stock.ticker}"]['yesterday_value'])
+                        assets.data["$#{stock.ticker}"]['current_price'] = number_to_currency(price.to_f)
+                        if week_days.include?(eastern_time_day) && (eastern_time_military_time.to_f > 17 && eastern_time_military_time.to_f < 18)
+                            assets.data["$#{stock.ticker}"]['yesterday_value'] = assets.data["$#{stock.ticker}"]['current']
+                        end
                     end
                 end
                 assets.current = total_assets

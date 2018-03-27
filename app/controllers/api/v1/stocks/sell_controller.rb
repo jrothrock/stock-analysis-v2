@@ -67,9 +67,7 @@ class Api::V1::Stocks::SellController < ApplicationController
         assets = Asset.where("user_id = ?", user.id).first_or_create
         price = params[:price]
         if !price
-            yahoo_client = YahooFinance::Client.new
-            data = yahoo_client.quotes([params[:ticker]], [:ask, :bid, :last_trade_date, :more_info])
-            price = data[0] ? data[0]['ask'] : nil
+            price = Stock.getStockValue(params[:ticker])
         end
         ledger.ticker = "$#{params[:ticker]}".upcase
         if price && price != 'N/A'
@@ -83,8 +81,13 @@ class Api::V1::Stocks::SellController < ApplicationController
                 else
                     assets.data["$#{params[:ticker].upcase}"]['sell_average'] = price.to_f
                 end
+                cur_price = assets.data["$#{params[:ticker].upcase}"]['current_price'].include?("$") ? assets.data["$#{params[:ticker].upcase}"]['current_price'].gsub(/\$|\,/,"").to_f : assets.data["$#{params[:ticker].upcase}"]['current_price'].to_f
+                if price != cur_price
+                    assets.current += ((price.to_f * params[:quantity].to_f) - (cur_price * params[:quantity].to_f))
+                end
                 assets.data["$#{params[:ticker].upcase}"]['quantity'] = assets.data["$#{params[:ticker].upcase}"]['quantity'].to_i - params[:quantity].to_i
                 assets.data["$#{params[:ticker].upcase}"]['current'] = assets.data["$#{params[:ticker].upcase}"]['current'].to_f - (assets.data["$#{params[:ticker].upcase}"]['purchase_average'].to_f * params[:quantity].to_f)
+                assets.data["$#{params[:ticker].upcase}"]['current_price'] = price.to_f
                 assets.data["$#{params[:ticker].upcase}"]['total']= assets.data["$#{params[:ticker].upcase}"]['quantity'].to_f * assets.data["$#{params[:ticker].upcase}"]['purchase_average']
                 if(assets.data["$#{params[:ticker].upcase}"].try(:[],params['sold']))
                     sold_total = assets.data["$#{params[:ticker].upcase}"]['sold'].keys.length
@@ -103,7 +106,6 @@ class Api::V1::Stocks::SellController < ApplicationController
             else
                 assets.data["Cash"] = (price.to_f * params[:quantity].to_f)
             end
-            assets.current += ((price.to_f * params[:quantity].to_f) - (average.to_f * params[:quantity].to_f))
             assets.roi = (assets.current - assets.beginning)/assets.beginning * 100
             ### this beginning really should be calculated using the individual stocks themselves, not just the average.
             ledger.amount = (price.to_f * params[:quantity].to_f)

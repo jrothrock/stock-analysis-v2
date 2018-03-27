@@ -20,6 +20,7 @@ class Stock < ApplicationRecord
     end
     def self.reset_history(symbols)
         symbols.each do |symbol|
+            symbol = symbol.include?("$") ? symbol.gsub("$","") : symbol
             graph_data = Stock.getGraphData(symbol)
             if graph_data
                 $redis.del("#{symbol}_graph")

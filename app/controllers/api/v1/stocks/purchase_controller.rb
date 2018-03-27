@@ -18,7 +18,10 @@ class Api::V1::Stocks::PurchaseController < ApplicationController
                 assets.data["$#{params[:ticker].upcase}"]['quantity'] = assets.data["$#{params[:ticker].upcase}"]['quantity'].to_i + params[:quantity].to_i
                 assets.data["$#{params[:ticker].upcase}"]['total'] = assets.data["$#{params[:ticker].upcase}"]['total'].to_f + (price.to_f * params[:quantity].to_f)
                 assets.data["$#{params[:ticker].upcase}"]['current'] = assets.data["$#{params[:ticker].upcase}"]['current'].to_f + (price.to_f * params[:quantity].to_f)
+                assets.data["$#{params[:ticker].upcase}"]['current_price'] = price.to_f
                 assets.data["$#{params[:ticker].upcase}"]['purchase_average'] = (assets.data["$#{params[:ticker].upcase}"]['total'].to_f / assets.data["$#{params[:ticker].upcase}"]['quantity'].to_f)
+                assets.data["$#{params[:ticker].upcase}"]['yesterday_value'] = assets.data["$#{params[:ticker].upcase}"]['current']
+                assets.data["$#{params[:ticker].upcase}"]['today_change'] = "$0.00"
                 total_purchases = assets.data["$#{params[:ticker].upcase}"]['purchases'].keys.length
                 assets.data["$#{params[:ticker].upcase}"]['purchases'][total_purchases.to_s]={"date" => Time.now.to_i, "quantity_purchased"=>params[:quantity], "price"=>price, "quantity_holding"=>params[:quantity]}
             else
@@ -28,8 +31,13 @@ class Api::V1::Stocks::PurchaseController < ApplicationController
                 assets.data["$#{params[:ticker].upcase}"]['quantity']=params[:quantity].to_i
                 assets.data["$#{params[:ticker].upcase}"]['total']= (price.to_f * params[:quantity].to_f)
                 assets.data["$#{params[:ticker].upcase}"]['current']= (price.to_f * params[:quantity].to_f)
+                assets.data["$#{params[:ticker].upcase}"]['current_price'] = price.to_f
                 assets.data["$#{params[:ticker].upcase}"]['purchase_average']=(assets.data["$#{params[:ticker].upcase}"]['total'].to_f / assets.data["$#{params[:ticker].upcase}"]['quantity'].to_f)
-                assets.data["$#{params[:ticker].upcase}"]['purchases']={}
+                assets.data["$#{params[:ticker].upcase}"]['yesterday_value'] = assets.data["$#{params[:ticker].upcase}"]['current']
+                assets.data["$#{params[:ticker].upcase}"]['today_change'] = "$0.00"
+                if !assets.data["$#{params[:ticker].upcase}"]['purchases']
+                    assets.data["$#{params[:ticker].upcase}"]['purchases']={}
+                end
                 assets.data["$#{params[:ticker].upcase}"]['purchases']['0']={"date" => Time.now.to_i, "quantity_purchased"=>params[:quantity], "price"=>price, "quantity_holding"=>params[:quantity]}
             end
             if (assets.data.try(:[],"Cash").to_f > (price.to_f * params[:quantity].to_f))

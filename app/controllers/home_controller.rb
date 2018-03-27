@@ -2,7 +2,7 @@ class HomeController < ApplicationController
   def index
     stocks = $redis.get("stocks")  
     if stocks.nil?
-        user = User.where("login_username = ?", "jack").first
+        user = User.first
         if user
             ledger = Ledger.where("user_id = ?", user.id).limit(10).order("created_at DESC").as_json
             assets = Asset.where("user_id = ?", user.id).first
