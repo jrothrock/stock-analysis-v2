@@ -19,23 +19,29 @@ desc "update statistics and graphs"
                 total_assets = cash
                 stocks.each do |stock|
                     quantity = stock.remaining
-                    price = Stock.getStockValue(stock)
+                    price = Stock.getStockValue(stock.ticker)
                     ## in case yahoo goes down.
                     if price
                         total_assets += (quantity.to_f * price.to_f)
                     else
                         return false
                     end
+                    if assets.data["$#{stock.ticker}"] && price
+                        assets.data["$#{stock.ticker}"]['current'] = (price * assets.data["$#{stock.ticker}"]['quantity'].to_f).to_f
+                    end
                 end
                 assets.current = total_assets
                 assets.today = total_assets.to_f - assets.yesterday.to_f
+                assets.roi = (assets.current - assets.beginning)/assets.beginning * 100
             end
 
             if week_days.include?(eastern_time_day) && (eastern_time_military_time.to_f > 17 && eastern_time_military_time.to_f < 18)
                 assets.yesterday = assets.current
             end
-
-            assets.save
+            if assets
+                assets.save
+                $redis.del("stocks")
+            end
         rescue => e
             puts "---BEGIN---"
             puts "Error in update rake"

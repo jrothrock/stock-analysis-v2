@@ -9,8 +9,10 @@ class Footer extends React.Component {
     super(props);
 
     let signed_in_value = localStorage.getItem("_stock_analysis_session") ? true : false;
+    let year = (new Date()).getFullYear()
     this.state = { current_user: this.props.current_user,
-                   signed_in: signed_in_value };
+                   signed_in: signed_in_value,
+                   year: year };
    this.updateSignedIn = this.props.updateSignedIn;
   }
 
@@ -32,6 +34,7 @@ class Footer extends React.Component {
               <div className="col l6 s12">
                 <h5 className="white-text">Stock Analysis V2</h5>
                 <p className="grey-text text-lighten-4">This is a continuous work in progress. Features will be added over time.</p>
+                <p className="grey-text text-lighten-4">* ROI is simple, and is not being discounted.</p>
               </div>
               <div className="col l4 offset-l2 s12">
                 <h5 className="white-text">Links</h5>
@@ -41,7 +44,7 @@ class Footer extends React.Component {
           </div>
           <div className="footer-copyright">
             <div className="container">
-            © 2017 All Rights Reserved. <a className="grey-text text-lighten-4" href='https://jackrothrock.com'>Jack Rothrock.</a>
+            © {this.state.year} All Rights Reserved. <a className="grey-text text-lighten-4" href='https://jackrothrock.com'>Jack Rothrock.</a>
                 <div className="grey-text text-lighten-4 right footer-social-icons">
                     <a href="https://jackrothrock.com">
                         <li>

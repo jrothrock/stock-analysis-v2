@@ -78,13 +78,12 @@ class Sell extends React.Component {
                 if(stocks.length === 0){
                     this.setState({noStocks:true})
                     $(`#submit-sell-button`).attr('disabled','disabled')
-                } else if(stocks.length === 1){
+                } else {
+                    console.log(stocks[0]);
+                    console.log(data.assets.data)
                     this.setState({stocks:stocks, quantities:[parseInt(data.assets.data[stocks[0]]['quantity'])], stock:stocks[0].substr(1), quantity:parseInt(data.assets.data[stocks[0]]['quantity'])})
                     $(`#lower-sell-fields`).slideDown();
-                } else {
-                    this.setState({stocks:stocks})
-                }
-                
+                } 
             },
             error: (error) =>{
                 console.log(error);
@@ -118,7 +117,7 @@ render() {
                         </div>
                             <div className="panel-body">
                                 {message}
-                                <div className="input-field">
+                                <div className="select-field">
                                     <span style={{color:'grey',fontSize:'0.8em'}}>Stock</span>
                                     <select style={{display:"block"}} onChange={(e) => this.updateStock(e.target.value)}>
                                         {options}

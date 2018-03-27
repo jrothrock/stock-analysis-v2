@@ -1,5 +1,5 @@
 # config valid only for current version of Capistrano
-lock "3.9.1"
+lock "3.10.1"
 
 set :application, "my_app_name"
 set :repo_url, "git@github.com:jrothrock/stock-analysis-v2.git"

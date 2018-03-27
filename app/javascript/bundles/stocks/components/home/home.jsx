@@ -70,13 +70,13 @@ export default class Home extends React.Component {
         <div className='home-links'>
           <a href='#statistics' onClick={(e)=> this.scrollToHash(e,'statistics')}><div className='home-links-container'>Statistics</div></a>
           <a href='#about' onClick={(e)=> this.scrollToHash(e,'about')}><div className='home-links-container'>About</div></a>
-          <a href='#ledger' onClick={(e)=> this.scrollToHash(e,'ledger')}><div className='home-links-container'>Ledger</div></a>
           <a href='#current' onClick={(e)=> this.scrollToHash(e,'current')}><div className='home-links-container'>Current</div></a>
+          <a href='#ledger' onClick={(e)=> this.scrollToHash(e,'ledger')}><div className='home-links-container'>Ledger</div></a>
         </div>
         <Statistics assets={this.state.assets} />
         <About  />
-        <Ledger entries={this.state.ledger} />
         <Assets assets={this.state.assets} />
+        <Ledger entries={this.state.ledger} />
       </div>
     );
   }

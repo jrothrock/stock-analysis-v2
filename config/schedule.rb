@@ -18,7 +18,9 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
+set :output, "log/cron_log.log"
+env :PATH, ENV['PATH']
 
-every 1.hours do
-    rake "update:generate", :output => {:error => "#{Whenever.path}/log/update/update.error.log", :standard => "#{Whenever.path}/log/update/update.standard.log"}
+every 1.hour do
+    rake "update:generate", :output => {:error => "#{Whenever.path}/log/update.error.log", :standard => "#{Whenever.path}/log/update.standard.log"}
 end

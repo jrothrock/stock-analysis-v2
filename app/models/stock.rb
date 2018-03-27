@@ -32,9 +32,8 @@ class Stock < ApplicationRecord
         begin
             url = "https://finance.yahoo.com/quote/#{symbol}/history/"
             doc = Nokogiri::HTML(open(url))
-
             # this definitely won't last forever.
-            first = JSON.parse(doc.search('script')[22].to_s.split("root.App.main = ")[1].split('(this)')[0].chomp(";\n}"))
+            first = JSON.parse(doc.search('script')[24].to_s.split("root.App.main = ")[1].split('(this)')[0].chomp(";\n}"))
             graph_data = first["context"]["dispatcher"]["stores"]["HistoricalPriceStore"]["prices"].map{|val| if(val.key?("close")) then {"date"=>Date.strptime(val["date"].to_s, '%s').strftime("%Y%m%d"), "close"=>val["close"]} end}.compact
         rescue
             return nil
@@ -42,8 +41,23 @@ class Stock < ApplicationRecord
     end
 
     def self.getStockValue(stock)
-        yahoo_client = YahooFinance::Client.new
-        data = yahoo_client.quotes([stock], [:ask])
-        price = data[0] ? data[0]['ask'] : nil
+        begin
+            url = "https://query1.finance.yahoo.com/v7/finance/quote?symbols=#{stock}&fields=ask,bid,price"
+            doc = Nokogiri::HTML(open(url))
+            json = JSON.parse(doc)['quoteResponse']['result'][0]
+            if json['ask'] != 0
+                return json['ask']
+            elsif json['bid'] != 0
+                return json['bid']
+            elsif json['postMarketPrice'] != 0
+                return json['postMarketPrice']
+            elsif json['regularMarketPrice'] != 0
+                return json['regularMarketPrice']
+            else 
+                return nil
+            end
+        rescue
+            return nil
+        end
     end
 end

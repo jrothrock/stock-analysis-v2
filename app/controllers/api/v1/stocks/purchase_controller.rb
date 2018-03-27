@@ -8,9 +8,7 @@ class Api::V1::Stocks::PurchaseController < ApplicationController
         assets.user_id = user.id
         price = params[:price]
         if !price
-            yahoo_client = YahooFinance::Client.new
-            data = yahoo_client.quotes([params[:ticker]], [:ask, :bid, :last_trade_date, :more_info])
-            price = data[0] ? data[0]['ask'] : nil
+            price = Stock.getStockValue(params[:ticker])
         end
         ledger.ticker = "$#{params[:ticker]}".upcase
         ledger.purchase = true
@@ -24,7 +22,7 @@ class Api::V1::Stocks::PurchaseController < ApplicationController
                 total_purchases = assets.data["$#{params[:ticker].upcase}"]['purchases'].keys.length
                 assets.data["$#{params[:ticker].upcase}"]['purchases'][total_purchases.to_s]={"date" => Time.now.to_i, "quantity_purchased"=>params[:quantity], "price"=>price, "quantity_holding"=>params[:quantity]}
             else
-                assets.data={}
+                assets.data = (assets.data && assets.data.is_a?(Hash)) ? assets.data : {}
                 assets.data["$#{params[:ticker].upcase}"]={}
                 assets.data["$#{params[:ticker].upcase}"]["total_quantity"]=params[:quantity].to_i
                 assets.data["$#{params[:ticker].upcase}"]['quantity']=params[:quantity].to_i

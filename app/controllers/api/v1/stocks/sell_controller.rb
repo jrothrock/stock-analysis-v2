@@ -104,7 +104,7 @@ class Api::V1::Stocks::SellController < ApplicationController
                 assets.data["Cash"] = (price.to_f * params[:quantity].to_f)
             end
             assets.current += ((price.to_f * params[:quantity].to_f) - (average.to_f * params[:quantity].to_f))
-            assets.roi = ((assets.current.to_f/assets.beginning.to_f) -1) *100
+            assets.roi = (assets.current - assets.beginning)/assets.beginning * 100
             ### this beginning really should be calculated using the individual stocks themselves, not just the average.
             ledger.amount = (price.to_f * params[:quantity].to_f)
             ledger.user_id = user.id

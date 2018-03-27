@@ -19,8 +19,18 @@ class Assets extends React.Component {
 
   render() {
     let lis = [<div key="-1" className='col s12 row stock-container'><div className="col s2">Ticker</div><div className="col s2">Quantity</div><div className="col s2">Total Spent</div><div className='col s2'>Average Paid</div><div className='col s2'>Current Value</div><div className='col s2'>Gain or Loss</div></div>];
-    let keys = this.state.assets && this.state.assets.data ? Object.keys(this.state.assets.data) : [];
+    let keys = this.state.assets && this.state.assets.data ? Object.keys(this.state.assets.data) : []; 
+    keys.sort(function(a,b){
+      if(a === "Cash"){
+        return 1
+      } else if(b === "Cash"){
+        return -1;
+      }
+      return 0;
+    })
+    console.log(keys);
     for(let i =0; i< keys.length; i++){
+      let change = keys[i] != "Cash" ? parseFloat(this.state.assets.data[keys[i]]['current'].replace(',','').substr(1)-Math.round((parseFloat(this.state.assets.data[keys[i]]['purchase_average'].replace(',','').substr(1))*parseFloat(this.state.assets.data[keys[i]]['quantity']))*100)/100).toFixed(2) : 0;
       if(parseInt(this.state.assets.data[keys[i]]['quantity']) > 0){
         lis.push(<div key={i} className="col s12 row stock-container">
             <div className="col s2">
@@ -39,15 +49,20 @@ class Assets extends React.Component {
             {this.state.assets.data[keys[i]]['current']}
             </div>
             <div className='col s2'>
-            {parseFloat(this.state.assets.data[keys[i]]['current'].substr(1)-Math.round((parseFloat(this.state.assets.data[keys[i]]['purchase_average'].substr(1))*parseFloat(this.state.assets.data[keys[i]]['quantity']))*100)/100)}
+              <span style={{color:(change >= 0 ? "#0ce212" : "#FF0000")}}>
+                  ${String(change.replace(/\B(?=(\d{3})+(?!\d))/g, ","))}
+              </span>
             </div>
         </div>)
       } else if(keys[i] === 'Cash' && parseFloat(this.state.assets.data[keys[i]].substr(1)) > 0){
           lis.push(<div key={i} className="col s12 row stock-container">
               <div className="col s2">
-                  {keys[i]}
+                  <span style={{color:"#0db70d"}}>
+                    {keys[i]}
+                  </span>
               </div>
               <div className="col s2">
+                  {parseInt(this.state.assets.data[keys[i]].replace(',','').substr(1))}
               </div>
               <div className="col s2">
               </div>

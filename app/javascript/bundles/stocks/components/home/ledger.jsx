@@ -47,11 +47,9 @@ class Ledger extends React.Component {
         for(let i =0; i<this.state.entries.length; i++){
         lis.push(<div key={i} className="col s12 row stock-container" id={i+'-ledger-container'}>
             <div className="col s2">
-                <Link to={{pathname:"/stock/"+this.state.entries[i].ticker.substr(1), query:{purchase_date:this.state.entries[i].purchase_date,purchase_price:parseFloat(this.state.entries[i].purchase_price.substr(1)), sale_date: this.state.entries[i].sale_date, sale_price: parseFloat(this.state.entries[i].sale_price.substr(1)) }}} activeClassName="active">
-                    <div className={'btn ' + (this.state.entries[i].purchase ? 'buy-btn' : 'sell-btn')}>
-                        {this.state.entries[i].purchase ? "BUY" : "SELL"}
-                    </div>
-                </Link>
+                <div className={'btn ' + (this.state.entries[i].purchase ? 'buy-btn' : 'sell-btn')} style={{cursor:"initial"}}>
+                    {this.state.entries[i].purchase ? "BUY" : "SELL"}
+                </div>
             </div>
             <div className="col s2">
                 <Link to={{pathname:"/stock/"+this.state.entries[i].ticker.substr(1), query:{purchase_date:this.state.entries[i].purchase_date,purchase_price:parseFloat(this.state.entries[i].purchase_price.substr(1)), sale_date: this.state.entries[i].sale_date, sale_price: parseFloat(this.state.entries[i].sale_price.substr(1)) }}} activeClassName="active">{this.state.entries[i].ticker}</Link>

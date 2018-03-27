@@ -25,6 +25,8 @@ class Statistics extends React.Component {
 
 
   render() {
+    let roi = parseFloat(this.state.roi);
+    let change = parseFloat(String(this.state.today_change).replace(',','').substr(1));
     return (
       <div>
         <div className='stats-container' id='statistics'>
@@ -34,13 +36,13 @@ class Statistics extends React.Component {
               Total Assets: <span className='stat-text'>{this.state.current_assets}</span>
             </div>
             <div className='stat roi col ms3'>
-              ROI: <span className='stat-text roi-text'>{this.state.roi}%</span>
+              *ROI: <span className='stat-text roi-text' style={{color:(roi >= 0 ? "#0ce212" : "#FF0000")}}>{this.state.roi}%</span>
             </div>
             <div className='stat amount-traded col ms3'>
               Starting Amount: <span className='stat-text'>{this.state.beginning_amount}</span>
             </div>
             <div className='stat amount-traded col ms3'>
-              Today's change: <span className='stat-text'>{this.state.today_change}</span>
+              Today's change: <span className='stat-text' style={{color:(change >= 0 ? "#0ce212" : "#FF0000")}}>{this.state.today_change}</span>
             </div>
           </div>
         </div>
