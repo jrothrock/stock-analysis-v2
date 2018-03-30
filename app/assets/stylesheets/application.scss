@@ -318,18 +318,28 @@ $duration: 10s;
     }
     .stocks-inner-container{
         width:100%;
-        font-size:0.76em;
+        font-size:0.55em;
     }
     .footer-social-icons{
         float:left !important;
         margin-top:10px;
+    }
+    .stats-inner-container, .about-container{
+        font-size:0.8em;
+    }
+    .stat{
+        white-space: nowrap;
+        .stat-text{
+            display:block;
+            padding: 0px 0px;
+        }
     }
     .buy-btn,.sell-btn{
         margin-top: -7px;
         margin-bottom: 7px;
         cursor: default;
         width: 25px;
-        padding: 0 3em 0 1.3em;
+        padding: 0 3.5em 0 1.6em;
         font-size: 0.9em;
         text-align: left;
     }

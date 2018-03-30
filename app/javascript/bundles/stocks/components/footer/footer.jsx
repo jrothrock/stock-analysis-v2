@@ -31,6 +31,7 @@ class Footer extends React.Component {
         <footer className="page-footer">
           <div className="container">
             <div className="row">
+              
               <div className="col l6 s12">
                 <h5 className="white-text">Stock Analysis V2</h5>
                 <p className="grey-text text-lighten-4">This is a continuous work in progress. Features will be added over time.</p>

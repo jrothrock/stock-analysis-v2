@@ -28,7 +28,6 @@ class Assets extends React.Component {
       }
       return 0;
     })
-    console.log(keys);
     for(let i =0; i< keys.length; i++){
       let change = keys[i] != "Cash" ? parseFloat(this.state.assets.data[keys[i]]['current'].replace(',','').substr(1)-Math.round((parseFloat(this.state.assets.data[keys[i]]['purchase_average'].replace(',','').substr(1))*parseFloat(this.state.assets.data[keys[i]]['quantity']))*100)/100).toFixed(2) : 0;
       let today_change =  keys[i] != "Cash" ? parseFloat(String(this.state.assets.data[keys[i]]['today_change']).replace(',','').substr(1)) : 0

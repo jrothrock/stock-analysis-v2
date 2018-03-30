@@ -41,19 +41,19 @@ class Stock < ApplicationRecord
         end
     end
 
-    def self.getStockValue(stock)
+    def self.getStockValue(stock, eastern_time_military_time=nil)
         begin
             url = "https://query1.finance.yahoo.com/v7/finance/quote?symbols=#{stock}&fields=ask,bid,price"
             doc = Nokogiri::HTML(open(url))
             json = JSON.parse(doc)['quoteResponse']['result'][0]
-            if json['ask'] != 0
-                return json['ask']
-            elsif json['bid'] != 0
-                return json['bid']
-            elsif json['postMarketPrice'] != 0
+            if json['postMarketPrice'] != 0 && eastern_time_military_time && (eastern_time_military_time.to_f > 17 && eastern_time_military_time.to_f < 18)
                 return json['postMarketPrice']
             elsif json['regularMarketPrice'] != 0
                 return json['regularMarketPrice']
+            elsif json['ask'] != 0
+                return json['ask']
+            elsif json['bid'] != 0
+                return json['bid']
             else 
                 return nil
             end

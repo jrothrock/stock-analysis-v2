@@ -19,7 +19,7 @@ desc "update statistics and graphs"
                 total_assets = cash
                 stocks.each do |stock|
                     quantity = stock.remaining
-                    price = Stock.getStockValue(stock.ticker)
+                    price = Stock.getStockValue(stock.ticker,eastern_time_military_time)
                     ## in case yahoo goes down.
                     if price
                         total_assets += (quantity.to_f * price.to_f)
