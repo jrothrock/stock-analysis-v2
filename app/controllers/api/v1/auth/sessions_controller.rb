@@ -2,15 +2,10 @@ class Api::V1::Auth::SessionsController < ApplicationController
   def new
   end
   def create
-		puts params[:username]
-        puts params[:password]
-        puts 'in create'
 		user = User.find_by_credentials(
 			params[:username].downcase,params[:password]
 		)
-        puts user
 		if !user.nil?
-            puts 'in if'
             render json: {token: user.token, data:{
 					username: user.username
 				}}, status: :ok
@@ -18,8 +13,6 @@ class Api::V1::Auth::SessionsController < ApplicationController
         else
             render json: {}, status: :not_found
 		end
-
-        puts 'past user'
 	end
 
 	def destroy

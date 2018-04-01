@@ -1,7 +1,7 @@
 class Api::V1::Stocks::PurchaseController < ApplicationController
   def create
       user = request.headers["Authorization"] ? User.find_by_token(request.headers["Authorization"].split(' ').last) : nil
-      if user
+      if user && !user.nil?
         ledger = Ledger.new
         stock = Stock.new
         assets = Asset.where("user_id = ?", user.id).first_or_create

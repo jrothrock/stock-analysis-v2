@@ -40,9 +40,12 @@ class Signup extends React.Component {
                this.props.history.push('/');
             },
             error: (error) =>{
-                console.log(error);
                 if(error.status === 409){
                    Materialize.toast('Username Already Exists', 3000, 'rounded-error');
+                } else if(error.status === 400 && error.responseJSON.email){
+                    Materialize.toast('Needs to be a valid email', 3000, 'rounded-error');
+                } else if(error.status === 400 && error.responseJSON.username){
+                    Materialize.toast('Username Can Only Be Letters, Numbers, and Underscores', 3000, 'rounded-error');
                 }
             }
           });

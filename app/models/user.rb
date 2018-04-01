@@ -5,10 +5,13 @@ class User < ApplicationRecord
   attr_reader :password
   include BCrypt
 
+  validates_format_of :email, :with => /\A*.(?=.*\@\b)(?=.*\.\b).*\Z/, :on => :create
+  validates_format_of :username, :with => /\A[\w-]*\Z/, :on => :create
+
   has_one :assets
   has_many :ledgers
 
-   before_create :create_token
+  before_create :create_token
 
    def self.find_by_credentials(username, password)
     user = User.where("login_username = ?", username).first
@@ -29,7 +32,6 @@ class User < ApplicationRecord
 
   def self.find_by_token(token)
     begin
-      puts token
       if token && token != 'undefined'
         decoded_token = JWT.decode token, Rails.application.secrets.secret_key_base, true, { :algorithm => 'HS256' }
         random_string = decoded_token[0]['string']
@@ -74,7 +76,6 @@ class User < ApplicationRecord
         retry
     end
       self.token_string = random_string
-      puts self.email
       payload = {:string => self.token_string}
       token = JWT.encode payload, Rails.application.secrets.secret_key_base, 'HS256'
       self.token = token 
@@ -82,19 +83,13 @@ class User < ApplicationRecord
 
   def self.logout(token)
     begin
-      puts token
     	decoded_token = JWT.decode token, Rails.application.secrets.secret_key_base, true, { :algorithm => 'HS256' }
-    	puts decoded_token
       random_string = decoded_token[0]['string']
     	user = User.where("token_string = ?", random_string).first
-    	puts user.username
     	if user.username
-        # puts user.token
     		user.token = ''
         user.token_string = ''
-        # user.logged_in = false
     		user.save!
-        # purge_cache(user.uuid)
     		return true
     	end
     rescue 
