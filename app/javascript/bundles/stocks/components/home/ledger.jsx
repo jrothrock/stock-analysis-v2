@@ -67,19 +67,19 @@ class Ledger extends React.Component {
                 <h5 className="center" style={{marginBottom:'20px', fontSize:'1.7rem'}}>Analysis:</h5>
                 <div className='col s12 row' style={{borderBottom:'1px solid rgba(255,255,255,0.2)'}}>
                     <h6 style={{fontSize:'1.45rem'}}>The Great:</h6>
-                    <div>{this.state.entries[i].the_great}</div>
+                    <div>{this.state.entries[i].the_great ? this.state.entries[i].the_great.replace("&amp;", "&") : this.state.entries[i].the_great}</div>
                 </div>
                 <div className='col s12 row' style={{borderBottom:'1px solid rgba(255,255,255,0.2)'}}>
                     <h6 style={{fontSize:'1.45rem'}}>The Good:</h6>
-                    <div>{this.state.entries[i].the_good}</div>
+                    <div>{this.state.entries[i].the_good ? this.state.entries[i].the_good.replace("&amp;", "&") : this.state.entries[i].the_good}</div>
                 </div>
                 <div className='col s12 row' style={{borderBottom:'1px solid rgba(255,255,255,0.2)'}}>
                     <h6 style={{fontSize:'1.45rem'}}>The Bad:</h6>
-                    <div>{this.state.entries[i].the_bad}</div>
+                    <div>{this.state.entries[i].the_bad ? this.state.entries[i].the_bad.replace("&amp;", "&") : this.state.entries[i].the_bad }</div>
                 </div>
                 <div className='col s12 row' style={{borderBottom:'1px solid rgba(255,255,255,0.2)'}}>
                     <h6 style={{fontSize:'1.45rem'}}>The Ugly:</h6>
-                    <div>{this.state.entries[i].the_ugly}</div>
+                    <div>{this.state.entries[i].the_ugly ? this.state.entries[i].the_ugly.replace("&amp;", "&") : this.state.entries[i].the_ugly }</div>
                 </div>
             </div>
         </div>)

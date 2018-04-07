@@ -30,7 +30,7 @@ desc "update statistics and graphs"
                         assets.data["$#{stock.ticker}"]['current'] = (price * assets.data["$#{stock.ticker}"]['quantity'].to_f).to_f
                         assets.data["$#{stock.ticker}"]['today_change'] = number_to_currency(assets.data["$#{stock.ticker}"]['current'] - assets.data["$#{stock.ticker}"]['yesterday_value'])
                         assets.data["$#{stock.ticker}"]['current_price'] = number_to_currency(price.to_f)
-                        if week_days.include?(eastern_time_day) && (eastern_time_military_time.to_f > 17 && eastern_time_military_time.to_f < 18)
+                        if week_days.include?(eastern_time_day) && (eastern_time_military_time.to_f > 17 && eastern_time_military_time.to_f < 19)
                             assets.data["$#{stock.ticker}"]['yesterday_value'] = assets.data["$#{stock.ticker}"]['current']
                         end
                     end
@@ -40,7 +40,7 @@ desc "update statistics and graphs"
                 assets.roi = (assets.current - assets.beginning)/assets.beginning * 100
             end
 
-            if week_days.include?(eastern_time_day) && (eastern_time_military_time.to_f > 17 && eastern_time_military_time.to_f < 18)
+            if week_days.include?(eastern_time_day) && (eastern_time_military_time.to_f > 17 && eastern_time_military_time.to_f < 19)
                 assets.yesterday = assets.current
             end
             if assets

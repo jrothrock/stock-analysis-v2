@@ -19,7 +19,7 @@
 
 /node_modules
 /yarn-error.log
-
+*.snap
 .byebug_history
 /public/packs
 /public/packs-test

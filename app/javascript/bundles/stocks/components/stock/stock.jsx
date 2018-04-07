@@ -6,7 +6,6 @@ class Stock extends React.Component {
 
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = { ticker: this.props.match.params.stock,
                    stock: {},
                    purchase_date: this.props.location.query && this.props.location.query.purchase_date ? this.props.location.query.purchase_date : null,

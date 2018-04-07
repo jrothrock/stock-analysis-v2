@@ -4,7 +4,7 @@ The site can be found at [https://stocks.jackrothrock.com](https://stocks.jackro
 
 ## What is this for?
 
-I created this to 'fake' invest in a stock every week and measure my ROI. Maybe in the future I'll add something to mark trades I actually conduct, but being a broke college student, I'll leave it as is. For now, I'll be staying away from options and ETFs.
+I created this to check my return if I invested $10,000 into stocks which I performed a thorough DD on.
 
 ## Why v2?
 

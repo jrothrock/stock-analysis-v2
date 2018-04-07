@@ -8,7 +8,7 @@ FactoryBot.define do
     the_bad "Bad"
     the_ugly "Ugly"
     quantity 1
-    id 100
+    id 1
     user_id 1
   end
 end
