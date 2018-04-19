@@ -11,8 +11,24 @@ class Ledger extends React.Component {
     this.state = {
                    entries: this.props.entries,
                    show_total:true,
-                   show_time_ago:true
+                   show_time_ago:true,
+                   viewed_ledger:false,
                  };
+    this.showFirstAnalysis();
+  }
+
+  showFirstAnalysis(){
+    $(window).scroll((event)=>{
+        let $link = $('#0-ledger-show-link');
+        if($link.length && !this.state.viewed_ledger){
+            let rect = $link[0].getBoundingClientRect();
+            if(rect.top <= document.documentElement.clientHeight * 0.6 && rect.left >= 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && rect.right <= (window.innerWidth || document.documentElement.clientWidth)){
+                this.setState({viewed_ledger:true})
+                $(this).unbind(event);
+                this.showDescription(null,0)
+            }
+        }
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -20,7 +36,7 @@ class Ledger extends React.Component {
   }
 
   showDescription(e,i){
-      e.preventDefault();
+      if(e) e.preventDefault();
       if(!$(`#${i}-ledger-show-link`).data("toggle")){
         $(`#${i}-ledger-show-link`).html("Hide <i class='fa fa-chevron-up'></i>")
         $(`#${i}-ledger-show-link`).data("toggle", true);
