@@ -20,12 +20,25 @@ desc "update statistics and graphs"
                 stocks.each do |stock|
                     if (eastern_time_military_time.to_f > 7 && eastern_time_military_time.to_f < 19)
                         quantity = stock.remaining
-                        price = Stock.getStockValue(stock.ticker,eastern_time_military_time)
-                        ## in case yahoo goes down.
-                        if price
-                            total_assets += (quantity.to_f * price.to_f)
-                        else
-                            return false
+                        attempt = 0
+                        begin
+                            price = Stock.getStockValue(stock.ticker,eastern_time_military_time)
+                            ## in case yahoo goes down.
+                            if price
+                                total_assets += (quantity.to_f * price.to_f)
+                            else
+                                raise "Unable to grab info."
+                            end
+                        rescue
+                            if attempt < 3
+                                attempt += 1
+                                retry
+                            else
+                                assets.data["yahoo_down"] = true
+                                assets.data["yahoo_down_date"] = Time.now.to_f
+                                assets.save
+                                return false
+                            end
                         end
                         if assets.data["$#{stock.ticker}"] && price
                             assets.data["$#{stock.ticker}"]['current'] = (price * assets.data["$#{stock.ticker}"]['quantity'].to_f).to_f
@@ -39,6 +52,10 @@ desc "update statistics and graphs"
                 end
                 if (eastern_time_military_time.to_f > 6 && eastern_time_military_time.to_f < 7.3)
                     assets.yesterday = assets.current
+                    if assets.data["yahoo_down"] == true && (Time.now - 1.days).to_f > assets.data["yahoo_down_date"].to_f
+                        assets.data["yahoo_down"] = false
+                        assets.data["yahoo_down_date"] = nil
+                    end
                 end
                 if (eastern_time_military_time.to_f >= 7.3)
                     assets.current = total_assets

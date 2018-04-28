@@ -35,61 +35,63 @@ class Assets extends React.Component {
       return 0;
     })
     for(let i =0; i< keys.length; i++){
-      let change = keys[i] != "Cash" ? parseFloat(this.state.assets.data[keys[i]]['current'].replace(',','').substr(1)-Math.round((parseFloat(this.state.assets.data[keys[i]]['purchase_average'].replace(',','').substr(1))*parseFloat(this.state.assets.data[keys[i]]['quantity']))*100)/100).toFixed(2) : 0;
-      let today_change =  keys[i] != "Cash" ? parseFloat(String(this.state.assets.data[keys[i]]['today_change']).replace(',','').substr(1)) : 0
-      if(parseInt(this.state.assets.data[keys[i]]['quantity']) > 0){
-        lis.push(<div key={i} className="col s12 row stock-container">
-            <div className="col smr asset-text">
-            <Link to={"/stock/"+keys[i].substr(1)} activeClassName="active">{keys[i]}</Link>
-            </div>
-            <div className="col smr asset-text">
-            {this.state.assets.data[keys[i]]['quantity']}
-            </div>
-            <div className="col smr asset-text">
-            {this.state.assets.data[keys[i]]['total']}
-            </div>
-            <div className='col smr asset-text'>
-            {this.state.assets.data[keys[i]]['current']}
-            </div>
-            <div className='col smr asset-text'>
-            {this.state.assets.data[keys[i]]['purchase_average']}
-            </div>
-            <div className='col smr asset-text'>
-            {this.state.assets.data[keys[i]]['current_price']}
-            </div>
-            <div className='col smr asset-text'>
-              <span style={{color:(change >= 0 ? "#0ce212" : "#FF0000")}}>
-                  ${String(change.replace(/\B(?=(\d{3})+(?!\d))/g, ","))}
-              </span>
-            </div>
-            <div className='col smr asset-text'>
-               <span style={{color:(today_change >= 0 ? "#0ce212" : "#FF0000")}}>
-                  {this.state.assets.data[keys[i]]['today_change']}
-                </span>
-            </div>
-        </div>)
-      } else if(keys[i] === 'Cash' && parseFloat(this.state.assets.data[keys[i]].substr(1)) > 0){
+      if(keys[i] != "yahoo_down" && keys[i] != "yahoo_down_date"){
+        let change = keys[i] != "Cash" ? parseFloat(this.state.assets.data[keys[i]]['current'].replace(',','').substr(1)-Math.round((parseFloat(this.state.assets.data[keys[i]]['purchase_average'].replace(',','').substr(1))*parseFloat(this.state.assets.data[keys[i]]['quantity']))*100)/100).toFixed(2) : 0;
+        let today_change =  keys[i] != "Cash" ? parseFloat(String(this.state.assets.data[keys[i]]['today_change']).replace(',','').substr(1)) : 0
+        if(parseInt(this.state.assets.data[keys[i]]['quantity']) > 0){
           lis.push(<div key={i} className="col s12 row stock-container">
               <div className="col smr asset-text">
-                  <span style={{color:"#0db70d"}}>
-                    {keys[i]}
+              <Link to={"/stock/"+keys[i].substr(1)} activeClassName="active">{keys[i]}</Link>
+              </div>
+              <div className="col smr asset-text">
+              {this.state.assets.data[keys[i]]['quantity']}
+              </div>
+              <div className="col smr asset-text">
+              {this.state.assets.data[keys[i]]['total']}
+              </div>
+              <div className='col smr asset-text'>
+              {this.state.assets.data[keys[i]]['current']}
+              </div>
+              <div className='col smr asset-text'>
+              {this.state.assets.data[keys[i]]['purchase_average']}
+              </div>
+              <div className='col smr asset-text'>
+              {this.state.assets.data[keys[i]]['current_price']}
+              </div>
+              <div className='col smr asset-text'>
+                <span style={{color:(change >= 0 ? "#0ce212" : "#FF0000")}}>
+                    ${String(change.replace(/\B(?=(\d{3})+(?!\d))/g, ","))}
+                </span>
+              </div>
+              <div className='col smr asset-text'>
+                <span style={{color:(today_change >= 0 ? "#0ce212" : "#FF0000")}}>
+                    {this.state.assets.data[keys[i]]['today_change']}
                   </span>
               </div>
-              <div className="col smr asset-text">
-                  {parseInt(this.state.assets.data[keys[i]].replace(',','').substr(1))}
-              </div>
-              <div className="col smr asset-text">
-              </div>
-              <div className="col smr asset-text">
-                  {this.state.assets.data[keys[i]]}
-              </div>
-              <div className="col smr asset-text">
-              </div>
-              <div className="col smr asset-text">
-              </div>
-              <div className="col smr asset-text">
-              </div>
-           </div>)
+          </div>)
+        } else if(keys[i] === 'Cash' && parseFloat(this.state.assets.data[keys[i]].substr(1)) > 0){
+            lis.push(<div key={i} className="col s12 row stock-container">
+                <div className="col smr asset-text">
+                    <span style={{color:"#0db70d"}}>
+                      {keys[i]}
+                    </span>
+                </div>
+                <div className="col smr asset-text">
+                    {parseInt(this.state.assets.data[keys[i]].replace(',','').substr(1))}
+                </div>
+                <div className="col smr asset-text">
+                </div>
+                <div className="col smr asset-text">
+                    {this.state.assets.data[keys[i]]}
+                </div>
+                <div className="col smr asset-text">
+                </div>
+                <div className="col smr asset-text">
+                </div>
+                <div className="col smr asset-text">
+                </div>
+            </div>)
+        }
       }
     }
     return (

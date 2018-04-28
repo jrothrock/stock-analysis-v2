@@ -6,12 +6,12 @@ class Asset < ApplicationRecord
 
     def self.mapAssets(assets)
         assets['data'].each do |x,v|
-            if(x != 'Cash')
-              v['current'] = number_to_currency(v['current'].to_f)
-              v['purchase_average'] = number_to_currency(v['purchase_average'].to_f)
-              v['total'] = number_to_currency(v['total'].to_f)
-            else 
-              assets['data']['Cash'] = number_to_currency(v)
+            if(x != 'Cash' && x != "yahoo_down" && x != "yahoo_down_date")
+            v['current'] = number_to_currency(v['current'].to_f)
+            v['purchase_average'] = number_to_currency(v['purchase_average'].to_f)
+            v['total'] = number_to_currency(v['total'].to_f)
+            elsif x == "Cash"
+            assets['data']['Cash'] = number_to_currency(v)
             end
         end
         assets["current"] = number_to_currency(assets["current"])

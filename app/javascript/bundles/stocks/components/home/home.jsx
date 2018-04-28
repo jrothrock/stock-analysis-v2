@@ -40,7 +40,7 @@ export default class Home extends React.Component {
         type: 'GET',
         success: (data) => {
           this.updateAssets(data.assets, data.ledger)
-            this.setState({ledger:data.ledger, assets: data.assets})
+          this.setState({ledger:data.ledger, assets: data.assets})
         },
         error: (error) =>{
             console.log(error);
@@ -62,6 +62,14 @@ export default class Home extends React.Component {
       },4000)
     } 
 
+    let notice = (<div style={{height:'70px'}}></div>)
+    if(this.state.assets && this.state.assets.data && this.state.assets.data.yahoo_down){
+        notice = (<div onClick={(e)=> $('.alert-container-bottom').css({'opacity':0})} className="alert-container-bottom"><div className='alert-outer-container'><div className={'alert alert-notice'}><p className='center'>Yahoo's API was nonresponsive on update, numbers reported may be inaccurate.</p></div></div></div>)
+        setTimeout(()=>{
+          $(".alert-container-bottom").css({'opacity':0})
+        },10000)
+    }
+
     return (
       <div>
         <div>
@@ -77,6 +85,9 @@ export default class Home extends React.Component {
         <About  />
         <Assets assets={this.state.assets} />
         <Ledger entries={this.state.ledger} />
+        <div>
+          {notice}
+        </div>
       </div>
     );
   }
