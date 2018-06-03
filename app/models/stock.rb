@@ -34,9 +34,12 @@ class Stock < ApplicationRecord
             url = "https://finance.yahoo.com/quote/#{symbol}/history/"
             doc = Nokogiri::HTML(open(url))
             # this definitely won't last forever.
-            first = JSON.parse(doc.search('script')[24].to_s.split("root.App.main = ")[1].split('(this)')[0].chomp(";\n}"))
+            match = doc.search("script").text.scan(/root.App.main = .*/)
+            
+            first = JSON.parse(match[0].to_s.split("root.App.main = ")[1].chomp(";"))
             graph_data = first["context"]["dispatcher"]["stores"]["HistoricalPriceStore"]["prices"].map{|val| if(val.key?("close")) then {"date"=>Date.strptime(val["date"].to_s, '%s').strftime("%Y%m%d"), "close"=>val["close"]} end}.compact
-        rescue
+        rescue => e
+            puts e
             return nil
         end
     end
